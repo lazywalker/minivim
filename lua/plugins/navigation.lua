@@ -10,6 +10,31 @@ return {
           enable = true,
           update_cwd = true,
         },
+        renderer = {
+          icons = {
+            glyphs = {
+              git = {
+                unstaged = "",
+                staged = "S",
+                unmerged = "",
+                renamed = "➜",
+                untracked = "U",
+                deleted = "",
+                ignored = "◌",
+              },
+            },
+          },
+        },
+        diagnostics = {
+          enable = true,
+          show_on_dirs = true,
+          icons = {
+            hint = "",
+            info = "",
+            warning = "",
+            error = "",
+          },
+        },
       }
     end
   },
