@@ -5,7 +5,12 @@ return {
     dependencies = { "kyazdani42/nvim-web-devicons" },
 
     init = function()
-      require("nvim-tree").setup()
+      require("nvim-tree").setup {
+        update_focused_file = {
+          enable = true,
+          update_cwd = true,
+        },
+      }
     end
   },
 
