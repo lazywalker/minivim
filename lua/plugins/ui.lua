@@ -21,11 +21,26 @@ return {
   -- goto_bottom = ']i',
   {
     'echasnovski/mini.indentscope',
-    version = '*',
+    version = false,
     event = "VeryLazy",
 
     init = function()
       require("mini.indentscope").setup {}
+    end
+  },
+  --#endregion
+
+  --#region
+  -- Minimal and fast statusline module with opinionated default look
+  -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-statusline.md
+  {
+    'echasnovski/mini.statusline',
+    version = false,
+    event = "VeryLazy",
+    dependencies = { "kyazdani42/nvim-web-devicons" },
+
+    init = function()
+      require("mini.statusline").setup {}
     end
   },
   --#endregion

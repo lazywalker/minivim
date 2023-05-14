@@ -19,7 +19,7 @@ return {
 
   {
     'echasnovski/mini.pairs',
-    version = '*',
+    version = false,
     event = "BufReadPost",
     init = function()
       require("mini.pairs").setup {}
