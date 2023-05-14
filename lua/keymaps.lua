@@ -40,7 +40,7 @@ keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
 keymap("n", "<leader>q", "<cmd>Bdelete!<CR>", opts)
 
 -- Entering command_mode
-keymap("n", "<CR>", ":", opts)
+-- keymap("n", "<CR>", ":", opts)
 
 -- Better paste
 keymap("v", "p", '"_dP', opts)
@@ -48,6 +48,12 @@ keymap("v", "p", '"_dP', opts)
 -- Insert --
 -- Press jj fast to enter
 keymap("i", "jj", "<ESC>", opts)
+
+-- Move with control key
+keymap("i", "<C-h>", "<Left>", opts)
+keymap("i", "<C-j>", "<Down>", opts)
+keymap("i", "<C-k>", "<Up>", opts)
+keymap("i", "<C-l>", "<Right>", opts)
 
 -- Visual --
 -- Stay in indent mode
