@@ -12,4 +12,21 @@ return {
       end
     end
   },
+
+  --#region
+  -- Visualize and work with indent scope
+  -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
+  -- Motions (jump to respective border line; if not present - body line)
+  -- goto_top = '[i',
+  -- goto_bottom = ']i',
+  {
+    'echasnovski/mini.indentscope',
+    version = '*',
+    event = "VeryLazy",
+
+    init = function()
+      require("mini.indentscope").setup {}
+    end
+  },
+  --#endregion
 }
