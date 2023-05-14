@@ -13,6 +13,21 @@ return {
     end
   },
 
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+
+  --   init = function()
+  --     local name = "catppuccin" -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+  --     local status_ok, _ = pcall(vim.cmd.colorscheme, name)
+  --     if not status_ok then
+  --       return
+  --     end
+  --   end
+  -- },
+
   --#region
   -- Visualize and work with indent scope
   -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
