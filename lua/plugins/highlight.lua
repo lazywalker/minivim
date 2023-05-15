@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "BufReadPost",
-    dependencies = { "p00f/nvim-ts-rainbow", event = "VeryLazy" },
+    dependencies = { "HiPhish/nvim-ts-rainbow2", event = "VeryLazy" },
     init = function()
       require('nvim-treesitter.configs').setup {
         ensure_installed = { "vim", "bash", "c", "cpp", "javascript", "json", "lua", "python", "rust" },
