@@ -75,7 +75,18 @@ keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 
 -- Git
-keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
+-- https://github.com/tanvirtin/vgit.nvim?tab=readme-ov-file#api
+vim.opt.incsearch = false
+keymap("n", "<leader>gdp", ":VGit buffer_diff_preview<CR>", opts)
+keymap("n", "<leader>ghu", ":VGit hunk_up<CR>", opts)
+keymap("n", "<leader>ghd", ":VGit hunk_down<CR>", opts)
+keymap("n", "<leader>ghp", ":VGit buffer_hunk_preview<CR>", opts)
+keymap("n", "<leader>ghl", ":VGit buffer_history_preview<CR>", opts)
+keymap("n", "<leader>gbp", ":VGit buffer_blame_preview<CR>", opts)
+keymap("n", "<leader>glp", ":VGit project_logs_preview<CR>", opts)
+
+-- Enter CMD mode?
+-- keymap("n", "<CR>", ":", opts)
 
 -- Comment
 -- keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
