@@ -78,5 +78,13 @@ return {
         under_cursor = true,
       }
     end
-  }
+  },
+
+  {
+    'fei6409/log-highlight.nvim',
+    event = "VeryLazy",
+    config = function()
+      require("log-highlight").setup {}
+    end
+  },
 }
