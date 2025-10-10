@@ -27,16 +27,25 @@ return {
     lazy = true,
     init = function()
       -- Setup language servers.
-      local lspconfig = require('lspconfig')
-      lspconfig.lua_ls.setup {}
-      -- lspconfig.pyright.setup {}
-      -- lspconfig.tsserver.setup {}
-      lspconfig.rust_analyzer.setup {
-        -- Server-specific settings. See `:help lspconfig-setup`
+      -- local lspconfig = require('lspconfig')
+      -- lspconfig.lua_ls.setup {}
+      -- -- lspconfig.pyright.setup {}
+      -- -- lspconfig.tsserver.setup {}
+      -- lspconfig.rust_analyzer.setup {
+      --   -- Server-specific settings. See `:help lspconfig-setup`
+      --   settings = {
+      --     ['rust-analyzer'] = {},
+      --   },
+      -- }
+
+      -- Neovim 0.11 provided a new LSP API
+      vim.lsp.config('lua_ls', {})
+      vim.lsp.config('rust_analyzer', {
         settings = {
-          ['rust-analyzer'] = {},
-        },
-      }
+          ['rust_analyzer'] = {}
+        }
+      })
+      vim.lsp.enable({'lua_ls', 'rust_analyzer'})
 
       -- Global mappings.
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
