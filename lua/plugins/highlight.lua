@@ -3,8 +3,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     event = "BufReadPost",
     dependencies = { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" },
-    init = function()
-      require('nvim-treesitter.configs').setup {
+    config = function()
+      require('nvim-treesitter').setup {
         ensure_installed = { "vim", "bash", "c", "cpp", "javascript", "json", "lua", "python", "rust" },
         highlight = { enable = true },
         indent = { enable = true },
