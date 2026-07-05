@@ -1,6 +1,9 @@
 return {
   "nvim-telescope/telescope.nvim",
-  event = "Bufenter",
+  event = "BufReadPre",
   cmd = { "Telescope" },
-  dependencies = { "nvim-lua/plenary.nvim" }
+  dependencies = { "nvim-lua/plenary.nvim" },
+  config = function()
+    require("telescope").setup {}
+  end
 }

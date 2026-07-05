@@ -3,7 +3,7 @@ return {
     "williamboman/mason.nvim",
     event = "BufReadPre",
     dependencies = { "williamboman/mason-lspconfig.nvim", lazy = true },
-    init = function()
+    config = function()
       require("mason").setup {
         ui = {
           icons = {
@@ -25,27 +25,30 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = true,
-    init = function()
-      -- Setup language servers.
-      -- local lspconfig = require('lspconfig')
-      -- lspconfig.lua_ls.setup {}
-      -- -- lspconfig.pyright.setup {}
-      -- -- lspconfig.tsserver.setup {}
-      -- lspconfig.rust_analyzer.setup {
-      --   -- Server-specific settings. See `:help lspconfig-setup`
-      --   settings = {
-      --     ['rust-analyzer'] = {},
-      --   },
-      -- }
-
-      -- Neovim 0.11 provided a new LSP API
-      vim.lsp.config('lua_ls', {})
+    config = function()
+      -- Neovim 0.11+ provides a new LSP API: vim.lsp.config / vim.lsp.enable
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            -- Make the nvim runtime available to lua_ls so editing nvim config
+            -- (init.lua, lua/**) gets vim.* completion and no false warnings.
+            workspace = {
+              checkThirdParty = false,
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            diagnostics = {
+              globals = { 'vim', 'hl' },
+            },
+          },
+        },
+      })
       vim.lsp.config('rust_analyzer', {
         settings = {
           ['rust_analyzer'] = {}
         }
       })
-      vim.lsp.enable({'lua_ls', 'rust_analyzer'})
+      vim.lsp.enable({ 'lua_ls', 'rust_analyzer' })
 
       -- Global mappings.
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions

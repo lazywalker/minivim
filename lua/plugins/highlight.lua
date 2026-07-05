@@ -21,7 +21,7 @@ return {
     'echasnovski/mini.pairs',
     version = false,
     event = "BufReadPost",
-    init = function()
+    config = function()
       require("mini.pairs").setup {}
     end
   },
@@ -32,7 +32,7 @@ return {
     "RRethy/vim-illuminate",
     event = "VeryLazy",
 
-    init = function()
+    config = function()
       local illuminate = require "illuminate"
       vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
       vim.api.nvim_set_keymap(

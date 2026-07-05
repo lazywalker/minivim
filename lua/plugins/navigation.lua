@@ -4,7 +4,7 @@ return {
     event = "VimEnter",
     dependencies = { "kyazdani42/nvim-web-devicons" },
 
-    init = function()
+    config = function()
       require("nvim-tree").setup {
         update_focused_file = {
           enable = true,
@@ -14,12 +14,12 @@ return {
           icons = {
             glyphs = {
               git = {
-                unstaged = "",
+                unstaged = "",
                 staged = "S",
-                unmerged = "",
+                unmerged = "",
                 renamed = "➜",
                 untracked = "U",
-                deleted = "",
+                deleted = "",
                 ignored = "◌",
               },
             },
@@ -29,10 +29,10 @@ return {
           enable = true,
           show_on_dirs = true,
           icons = {
-            hint = "",
-            info = "",
-            warning = "",
-            error = "",
+            hint = "",
+            info = "",
+            warning = "",
+            error = "",
           },
         },
       }
@@ -43,7 +43,7 @@ return {
     "akinsho/bufferline.nvim",
     event = { "BufReadPre", "BufAdd", "BufNew", "BufReadPost" },
     dependencies = { "famiu/bufdelete.nvim" },
-    init = function()
+    config = function()
       require("bufferline").setup {
         options = {
           diagnostics = "nvim_lsp",

@@ -76,7 +76,6 @@ keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 
 -- Git
 -- https://github.com/tanvirtin/vgit.nvim?tab=readme-ov-file#api
-vim.opt.incsearch = false
 keymap("n", "<leader>gdp", ":VGit buffer_diff_preview<CR>", opts)
 keymap("n", "<leader>ghu", ":VGit hunk_up<CR>", opts)
 keymap("n", "<leader>ghd", ":VGit hunk_down<CR>", opts)
