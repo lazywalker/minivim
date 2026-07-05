@@ -1,13 +1,27 @@
 return {
+  -- Catppuccin: cross-platform default colorscheme (Linux/macOS/Alpine).
+  -- Acts as a transparent fallback so the terminal/compositor background
+  -- shows through. On Linux with Noctalia, base16/matugen layers on top
+  -- (see lua/matugen.lua, gitignored). Elsewhere catppuccin provides the
+  -- colors on its own.
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
+    lazy = false,    -- load during startup so it is the active colorscheme
+    priority = 1000, -- load before all other start plugins
 
     config = function()
-      local name = "catppuccin" -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-      pcall(vim.cmd.colorscheme, name)
+      require("catppuccin").setup({
+        transparent_background = true, -- do not render solid bg; let terminal/compositor show through
+        flavour = "mocha",             -- latte, frappe, macchiato, mocha
+        integrations = {
+          nvimtree = true,
+          bufferline = true,
+          which_key = true,
+          mini = { enabled = true },
+        },
+      })
+      vim.cmd.colorscheme("catppuccin")
     end
   },
 

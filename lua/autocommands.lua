@@ -1,3 +1,31 @@
+-- Force transparency on side-panel / plugin Normal highlights after any
+-- colorscheme applies. Works for both catppuccin (fallback) and base16/matugen
+-- (Noctalia). catppuccin already sets transparent_background = true, but some
+-- plugin integrations still paint a solid bg (e.g. NvimTree); this strips it
+-- so the terminal/compositor background shows through uniformly.
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("TransparentHighlights", { clear = true }),
+  callback = function()
+    local groups = {
+      "Normal",
+      "NormalNC",
+      "NvimTreeNormal",
+      "NvimTreeNormalNC",
+      "NvimTreeBackground",
+      "BufferLineFill",
+      "BufferLineBackground",
+      "BufferLineTabVisible",
+      "BufferLineTabSelected",
+      "SignColumn",
+      "VertSplit",
+      "WinSeparator",
+    }
+    for _, g in ipairs(groups) do
+      vim.api.nvim_set_hl(0, g, { bg = "NONE" })
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "qf", "help", "man", "lspinfo", "spectre_panel" },
   callback = function()
