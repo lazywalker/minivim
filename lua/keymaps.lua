@@ -84,6 +84,9 @@ keymap("n", "<leader>ghl", ":VGit buffer_history_preview<CR>", opts)
 keymap("n", "<leader>gbp", ":VGit buffer_blame_preview<CR>", opts)
 keymap("n", "<leader>glp", ":VGit project_logs_preview<CR>", opts)
 
+-- Markdown
+keymap("n", "<leader>md", "<cmd>RenderMarkdown toggle<cr>", { desc = "Toggle Markdown Render" })
+
 -- Enter CMD mode?
 -- keymap("n", "<CR>", ":", opts)
 

@@ -5,7 +5,7 @@ return {
     dependencies = { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" },
     config = function()
       require('nvim-treesitter').setup {
-        ensure_installed = { "vim", "bash", "c", "cpp", "javascript", "json", "lua", "python", "rust" },
+        ensure_installed = { "vim", "bash", "c", "cpp", "javascript", "json", "lua", "python", "rust", "markdown", "markdown_inline" },
         highlight = { enable = true },
         indent = { enable = true },
         rainbow = {
