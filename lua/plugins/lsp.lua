@@ -24,7 +24,7 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       -- Neovim 0.11+ provides a new LSP API: vim.lsp.config / vim.lsp.enable
       vim.lsp.config('lua_ls', {
