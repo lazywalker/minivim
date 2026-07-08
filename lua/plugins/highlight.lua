@@ -2,19 +2,35 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "BufReadPost",
-    dependencies = { "HiPhish/rainbow-delimiters.nvim", event = "VeryLazy" },
+    build = ":TSUpdate",
     config = function()
+      -- nvim-treesitter (main branch) only manages parser installation.
+      -- Highlight/indent/fold are enabled via the built-in vim.treesitter.start()
+      -- (the old nvim-treesitter.configs.setup { highlight = ... } is gone).
       require('nvim-treesitter').setup {
         ensure_installed = { "vim", "bash", "c", "cpp", "javascript", "json", "lua", "python", "rust", "markdown", "markdown_inline" },
-        highlight = { enable = true },
-        indent = { enable = true },
-        rainbow = {
-          enable = true,
-          extended_mode = true,
-          max_file_lines = nil,
-        },
       }
-    end
+
+      -- Enable treesitter highlight/indent/fold on every filetype that has a
+      -- parser installed. Neovim-native way; pcall guards filetypes without one.
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
+    end,
+  },
+
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "BufReadPost",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      -- rainbow-delimiters needs treesitter highlight running (see the
+      -- FileType autocmd above). Default strategy colors nested delimiters.
+      require('rainbow-delimiters.setup').setup {}
+    end,
   },
 
   {
@@ -35,18 +51,8 @@ return {
     config = function()
       local illuminate = require "illuminate"
       vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
-      vim.api.nvim_set_keymap(
-        "n",
-        "<a-n>",
-        '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
-        { noremap = true }
-      )
-      vim.api.nvim_set_keymap(
-        "n",
-        "<a-p>",
-        '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-        { noremap = true }
-      )
+      vim.keymap.set("n", "<a-n>", function() require("illuminate").next_reference { wrap = true } end, { desc = "Illuminate: next reference" })
+      vim.keymap.set("n", "<a-p>", function() require("illuminate").next_reference { reverse = true, wrap = true } end, { desc = "Illuminate: previous reference" })
 
       illuminate.configure {
         providers = {
