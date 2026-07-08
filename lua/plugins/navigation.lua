@@ -2,7 +2,7 @@ return {
   {
     "kyazdani42/nvim-tree.lua",
     event = "VimEnter",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
+    dependencies = { { "echasnovski/mini.icons", version = false } },
 
     config = function()
       require("nvim-tree").setup {

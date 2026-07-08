@@ -38,7 +38,7 @@ lua/
     lsp.lua               mason + nvim-lspconfig (Neovim 0.11+ API)
     navigation.lua        nvim-tree, bufferline
     telescope.lua         fuzzy finder
-    ui.lua                catppuccin, mini.indentscope, mini.statusline
+    ui.lua                catppuccin, mini.indentscope, mini.statusline, mini.icons
     which-key.lua         keymap hints
 ```
 

@@ -49,7 +49,7 @@ return {
     'echasnovski/mini.statusline',
     version = false,
     event = "VeryLazy",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
+    dependencies = { { "echasnovski/mini.icons", version = false } },
 
     config = function()
       require("mini.statusline").setup {}
