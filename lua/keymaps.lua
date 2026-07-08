@@ -73,14 +73,14 @@ keymap("n", "<leader>fb", ":Telescope buffers<CR>", { silent = true, desc = "Fin
 keymap("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>", { silent = true, desc = "LSP: document symbols" })
 keymap("n", "<leader>lS", ":Telescope lsp_workspace_symbols<CR>", { silent = true, desc = "LSP: workspace symbols" })
 
--- Git
--- https://github.com/tanvirtin/vgit.nvim?tab=readme-ov-file#api
-keymap("n", "<leader>gdp", ":VGit buffer_diff_preview<CR>", { silent = true, desc = "Git: buffer diff preview" })
-keymap("n", "<leader>ghu", ":VGit hunk_up<CR>", { silent = true, desc = "Git: hunk up" })
-keymap("n", "<leader>ghd", ":VGit hunk_down<CR>", { silent = true, desc = "Git: hunk down" })
-keymap("n", "<leader>ghp", ":VGit buffer_hunk_preview<CR>", { silent = true, desc = "Git: buffer hunk preview" })
-keymap("n", "<leader>ghl", ":VGit buffer_history_preview<CR>", { silent = true, desc = "Git: buffer history preview" })
-keymap("n", "<leader>gbp", ":VGit buffer_blame_preview<CR>", { silent = true, desc = "Git: buffer blame preview" })
+-- Git (gitsigns.nvim)
+-- https://neovim.io/doc/user/diagnostic.html
+keymap("n", "<leader>gdp", ":Gitsigns diffthis<CR>", { silent = true, desc = "Git: diff buffer" })
+keymap("n", "<leader>ghu", ":Gitsigns prev_hunk<CR>", { silent = true, desc = "Git: previous hunk" })
+keymap("n", "<leader>ghd", ":Gitsigns next_hunk<CR>", { silent = true, desc = "Git: next hunk" })
+keymap("n", "<leader>ghp", ":Gitsigns preview_hunk<CR>", { silent = true, desc = "Git: preview hunk" })
+keymap("n", "<leader>ghl", ":Gitsigns blame_line<CR>", { silent = true, desc = "Git: blame line" })
+keymap("n", "<leader>gbp", ":Gitsigns blame_line<CR>", { silent = true, desc = "Git: blame line" })
 
 -- Lsp
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { silent = true, desc = "LSP: format buffer" })

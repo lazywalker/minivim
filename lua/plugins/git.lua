@@ -1,10 +1,17 @@
 return {
   {
-    "tanvirtin/vgit.nvim",
+    "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
-    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("vgit").setup {}
-    end
+      require("gitsigns").setup {
+        signs = {
+          add = { text = "+" },
+          change = { text = "~" },
+          delete = { text = "_" },
+          topdelete = { text = "=" },
+          changedelete = { text = "~" },
+        },
+      }
+    end,
   },
 }
