@@ -17,84 +17,70 @@ vim.g.mapleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-h>", "<C-w>h", { silent = true, desc = "Move to left window" })
+keymap("n", "<C-j>", "<C-w>j", { silent = true, desc = "Move to below window" })
+keymap("n", "<C-k>", "<C-w>k", { silent = true, desc = "Move to above window" })
+keymap("n", "<C-l>", "<C-w>l", { silent = true, desc = "Move to right window" })
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<C-Up>", ":resize -2<CR>", { silent = true, desc = "Resize window taller" })
+keymap("n", "<C-Down>", ":resize +2<CR>", { silent = true, desc = "Resize window shorter" })
+keymap("n", "<C-Left>", ":vertical resize -2<CR>", { silent = true, desc = "Resize window narrower" })
+keymap("n", "<C-Right>", ":vertical resize +2<CR>", { silent = true, desc = "Resize window wider" })
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap("n", "<S-l>", ":bnext<CR>", { silent = true, desc = "Next buffer" })
+keymap("n", "<S-h>", ":bprevious<CR>", { silent = true, desc = "Previous buffer" })
 
 -- Clear highlights
-keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
+keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", { silent = true, desc = "Clear search highlight" })
 
 -- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
-keymap("n", "<leader>q", "<cmd>Bdelete!<CR>", opts)
-
--- Entering command_mode
--- keymap("n", "<CR>", ":", opts)
+keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", { silent = true, desc = "Close buffer" })
+keymap("n", "<leader>q", "<cmd>Bdelete!<CR>", { silent = true, desc = "Close buffer" })
 
 -- Better paste
-keymap("v", "p", '"_dP', opts)
+keymap("v", "p", '"_dP', { silent = true, desc = "Paste without yanking replaced text" })
 
 -- Insert --
 -- Press jj fast to enter
-keymap("i", "jj", "<ESC>", opts)
+keymap("i", "jj", "<ESC>", { desc = "Exit insert mode" })
 
 -- Move with control key
-keymap("i", "<C-h>", "<Left>", opts)
-keymap("i", "<C-j>", "<Down>", opts)
-keymap("i", "<C-k>", "<Up>", opts)
-keymap("i", "<C-l>", "<Right>", opts)
+keymap("i", "<C-h>", "<Left>", { desc = "Move cursor left (insert)" })
+keymap("i", "<C-j>", "<Down>", { desc = "Move cursor down (insert)" })
+keymap("i", "<C-k>", "<Up>", { desc = "Move cursor up (insert)" })
+keymap("i", "<C-l>", "<Right>", { desc = "Move cursor right (insert)" })
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+keymap("v", "<", "<gv", { silent = true, desc = "Indent left (visual)" })
+keymap("v", ">", ">gv", { silent = true, desc = "Indent right (visual)" })
 
 -- Better delete a word backwards with Ctrl-Backspace.
-keymap("i", "<C-BS>", "<C-W>", opts)
+keymap("i", "<C-BS>", "<C-W>", { desc = "Delete word backwards (insert)" })
 
 -- Plugins --
 
 -- NvimTree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { silent = true, desc = "Toggle file explorer" })
 
 -- Telescope
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
-keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
-keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
-keymap("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>", opts)
-keymap("n", "<leader>lS", ":Telescope lsp_workspace_symbols<CR>", opts)
+keymap("n", "<leader>ff", ":Telescope find_files<CR>", { silent = true, desc = "Find files" })
+keymap("n", "<leader>ft", ":Telescope live_grep<CR>", { silent = true, desc = "Live grep" })
+keymap("n", "<leader>fp", ":Telescope projects<CR>", { silent = true, desc = "Find projects" })
+keymap("n", "<leader>fb", ":Telescope buffers<CR>", { silent = true, desc = "Find buffers" })
+keymap("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>", { silent = true, desc = "LSP: document symbols" })
+keymap("n", "<leader>lS", ":Telescope lsp_workspace_symbols<CR>", { silent = true, desc = "LSP: workspace symbols" })
 
 -- Git
 -- https://github.com/tanvirtin/vgit.nvim?tab=readme-ov-file#api
-keymap("n", "<leader>gdp", ":VGit buffer_diff_preview<CR>", opts)
-keymap("n", "<leader>ghu", ":VGit hunk_up<CR>", opts)
-keymap("n", "<leader>ghd", ":VGit hunk_down<CR>", opts)
-keymap("n", "<leader>ghp", ":VGit buffer_hunk_preview<CR>", opts)
-keymap("n", "<leader>ghl", ":VGit buffer_history_preview<CR>", opts)
-keymap("n", "<leader>gbp", ":VGit buffer_blame_preview<CR>", opts)
-keymap("n", "<leader>glp", ":VGit project_logs_preview<CR>", opts)
-
--- Markdown
-keymap("n", "<leader>md", "<cmd>RenderMarkdown toggle<cr>", { desc = "Toggle Markdown Render" })
-
--- Enter CMD mode?
--- keymap("n", "<CR>", ":", opts)
-
--- Comment
--- keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
--- keymap("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts)
+keymap("n", "<leader>gdp", ":VGit buffer_diff_preview<CR>", { silent = true, desc = "Git: buffer diff preview" })
+keymap("n", "<leader>ghu", ":VGit hunk_up<CR>", { silent = true, desc = "Git: hunk up" })
+keymap("n", "<leader>ghd", ":VGit hunk_down<CR>", { silent = true, desc = "Git: hunk down" })
+keymap("n", "<leader>ghp", ":VGit buffer_hunk_preview<CR>", { silent = true, desc = "Git: buffer hunk preview" })
+keymap("n", "<leader>ghl", ":VGit buffer_history_preview<CR>", { silent = true, desc = "Git: buffer history preview" })
+keymap("n", "<leader>gbp", ":VGit buffer_blame_preview<CR>", { silent = true, desc = "Git: buffer blame preview" })
 
 -- Lsp
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { silent = true, desc = "LSP: format buffer" })
