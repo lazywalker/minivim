@@ -122,7 +122,8 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function()
-    vim.cmd "hi link illuminatedWord LspReferenceText"
+    -- Style mini.cursorword's highlight (underlines the word under cursor).
+    vim.cmd "hi MiniCursorword term=underline cterm=underline gui=underline"
   end,
 })
 

@@ -42,48 +42,15 @@ return {
     end
   },
 
-  -- Vim plugin for automatically highlighting other uses of the word
-  -- under the cursor using either LSP, Tree-sitter, or regex matching.
+  -- mini.cursorword: highlight the word under the cursor (replaces vim-illuminate).
+  -- For reference jumping use gr (LSP references / telescope).
   {
-    "RRethy/vim-illuminate",
+    'echasnovski/mini.cursorword',
+    version = false,
     event = "VeryLazy",
-
     config = function()
-      local illuminate = require "illuminate"
-      vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
-      vim.keymap.set("n", "<a-n>", function() require("illuminate").next_reference { wrap = true } end, { desc = "Illuminate: next reference" })
-      vim.keymap.set("n", "<a-p>", function() require("illuminate").next_reference { reverse = true, wrap = true } end, { desc = "Illuminate: previous reference" })
-
-      illuminate.configure {
-        providers = {
-          "lsp",
-          "treesitter",
-          "regex",
-        },
-        delay = 200,
-        filetypes_denylist = {
-          "dirvish",
-          "fugitive",
-          "alpha",
-          "NvimTree",
-          "packer",
-          "neogitstatus",
-          "Trouble",
-          "lir",
-          "Outline",
-          "spectre_panel",
-          "toggleterm",
-          "DressingSelect",
-          "TelescopePrompt",
-        },
-        filetypes_allowlist = {},
-        modes_denylist = {},
-        modes_allowlist = {},
-        providers_regex_syntax_denylist = {},
-        providers_regex_syntax_allowlist = {},
-        under_cursor = true,
-      }
-    end
+      require("mini.cursorword").setup {}
+    end,
   },
 
   {

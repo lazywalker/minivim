@@ -42,7 +42,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     event = { "BufReadPre", "BufAdd", "BufNew", "BufReadPost" },
-    dependencies = { "famiu/bufdelete.nvim" },
+    dependencies = { { "echasnovski/mini.bufremove", version = false } },
     config = function()
       require("bufferline").setup {
         options = {

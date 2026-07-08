@@ -35,9 +35,9 @@ keymap("n", "<S-h>", ":bprevious<CR>", { silent = true, desc = "Previous buffer"
 -- Clear highlights
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", { silent = true, desc = "Clear search highlight" })
 
--- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", { silent = true, desc = "Close buffer" })
-keymap("n", "<leader>q", "<cmd>Bdelete!<CR>", { silent = true, desc = "Close buffer" })
+-- Close buffers (mini.bufremove: close without disrupting window layout)
+keymap("n", "<S-q>", function() require("mini.bufremove").delete(0, false) end, { silent = true, desc = "Close buffer" })
+keymap("n", "<leader>q", function() require("mini.bufremove").delete(0, false) end, { silent = true, desc = "Close buffer" })
 
 -- Better paste
 keymap("v", "p", '"_dP', { silent = true, desc = "Paste without yanking replaced text" })
