@@ -18,7 +18,7 @@ return {
           documentation = {
             auto_show = true,
             auto_show_delay_ms = 200,
-            window = { bordered = true },
+            window = { border = 'rounded' },
           },
           list = { selection = { preselect = true, auto_insert = false } },
           menu = {
