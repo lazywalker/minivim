@@ -13,6 +13,20 @@ end
 vim.opt.backup = false                          -- creates a backup file
 vim.opt.clipboard = "unnamedplus"               -- allows neovim to access the system clipboard
 vim.opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
+
+-- Over SSH there is no local clipboard tool. Fall back to the built-in OSC 52
+-- provider: yanks are sent to the local terminal via an escape sequence
+-- (supported by kitty/ghostty/alacritty/wezterm), so copying on the remote
+-- host lands on the local clipboard. Without this, :checkhealth warns
+-- "No clipboard tool found" and "+/* registers are dead.
+if vim.env.SSH_CONNECTION then
+  local osc52 = require("vim.ui.clipboard.osc52").copy
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy  = { ["+"] = osc52 "+", ["*"] = osc52 "*" },
+    paste = { ["+"] = osc52 "+", ["*"] = osc52 "*" },
+  }
+end
 vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
 vim.opt.conceallevel = 0                        -- so that `` is visible in markdown files
 vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
