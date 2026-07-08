@@ -1,10 +1,12 @@
 return {
-  "goolord/alpha-nvim",
-  event = "VimEnter",
-  dependencies = { { "echasnovski/mini.icons", version = false } },
-  config = function()
-    local alpha = require "alpha"
-    local startify = require "alpha.themes.startify"
-    alpha.setup(startify.opts)
-  end
+  {
+    "echasnovski/mini.starter",
+    version = false,
+    event = "VimEnter",
+    config = function()
+      -- mini.starter: replaces alpha-nvim. Opinionated startup screen with
+      -- recent files and actions; no extra dependency (mini ecosystem).
+      require("mini.starter").setup {}
+    end,
+  },
 }
