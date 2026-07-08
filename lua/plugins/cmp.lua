@@ -1,31 +1,18 @@
 return {
   "hrsh7th/nvim-cmp",
   dependencies = {
-    {
-      "hrsh7th/cmp-nvim-lsp",
-    },
-    {
-      "hrsh7th/cmp-buffer",
-    },
-    {
-      "hrsh7th/cmp-path",
-    },
-    {
-      "hrsh7th/cmp-cmdline",
-    },
-    {
-      "saadparwaiz1/cmp_luasnip",
-    },
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-path" },
+    { "hrsh7th/cmp-cmdline" },
+    { "saadparwaiz1/cmp_luasnip" },
     {
       "L3MON4D3/LuaSnip",
       event = "InsertEnter",
-      dependencies = {
-        "rafamadriz/friendly-snippets",
-      },
+      dependencies = { "rafamadriz/friendly-snippets" },
     },
-    {
-      "hrsh7th/cmp-nvim-lua",
-    },
+    { "hrsh7th/cmp-nvim-lua" },
+    { "echasnovski/mini.icons", version = false },
   },
   event = {
     "InsertEnter",
@@ -42,48 +29,25 @@ return {
       return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
     end
 
-    local kind_icons = {
-      Array = " ",
-      Boolean = " ",
-      Class = " ",
-      Color = " ",
-      Constant = " ",
-      Constructor = " ",
-      Copilot = " ",
-      Enum = " ",
-      EnumMember = " ",
-      Event = "",
-      Field = " ",
-      File = " ",
-      Folder = " ",
-      Function = " ",
-      Interface = " ",
-      Key = " ",
-      Keyword = " ",
-      Method = " ",
-      Module = " ",
-      Namespace = " ",
-      Null = " ",
-      Number = " ",
-      Object = " ",
-      Operator = " ",
-      Package = " ",
-      Property = " ",
-      Reference = " ",
-      Snippet = " ",
-      String = " ",
-      Struct = " ",
-      Text = " ",
-      TypeParameter = " ",
-      Unit = " ",
-      Value = " ",
-      Variable = " ",
-    }
+    -- Use mini.icons for completion item icons instead of a hand-maintained table.
+    local function kind_fmt(entry, vim_item)
+      local icon, _, default = pcall(require("mini.icons").get, "lsp", vim_item.kind)
+      vim_item.kind = icon and not default and icon or vim_item.kind
+      vim_item.menu = ({
+        nvim_lsp = "",
+        nvim_lua = "",
+        luasnip = "",
+        buffer = "",
+        path = "",
+        emoji = "",
+      })[entry.source.name]
+      return vim_item
+    end
 
     cmp.setup {
       snippet = {
         expand = function(args)
-          luasnip.lsp_expand(args.body) -- For `luasnip` users.
+          luasnip.lsp_expand(args.body)
         end,
       },
       mapping = cmp.mapping.preset.insert {
@@ -96,8 +60,6 @@ return {
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
         },
-        -- Accept currently selected item. If none selected, `select` first item.
-        -- Set `select` to `false` to only confirm explicitly selected items.
         ["<CR>"] = cmp.mapping.confirm { select = true },
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -111,10 +73,7 @@ return {
           else
             fallback()
           end
-        end, {
-          "i",
-          "s",
-        }),
+        end, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
@@ -123,25 +82,11 @@ return {
           else
             fallback()
           end
-        end, {
-          "i",
-          "s",
-        }),
+        end, { "i", "s" }),
       },
       formatting = {
         fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-          vim_item.kind = kind_icons[vim_item.kind]
-          vim_item.menu = ({
-            nvim_lsp = "",
-            nvim_lua = "",
-            luasnip = "",
-            buffer = "",
-            path = "",
-            emoji = "",
-          })[entry.source.name]
-          return vim_item
-        end,
+        format = kind_fmt,
       },
       sources = {
         { name = "nvim_lsp" },
