@@ -1,111 +1,79 @@
 return {
-  "hrsh7th/nvim-cmp",
-  dependencies = {
-    { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-buffer" },
-    { "hrsh7th/cmp-path" },
-    { "hrsh7th/cmp-cmdline" },
-    { "saadparwaiz1/cmp_luasnip" },
-    {
+  {
+    "Saghen/blink.cmp",
+    version = "1.*", -- lock to v1 stable (v2 is a breaking-changes rewrite)
+    event = { "InsertEnter", "CmdlineEnter" },
+    dependencies = {
       "L3MON4D3/LuaSnip",
-      event = "InsertEnter",
-      dependencies = { "rafamadriz/friendly-snippets" },
+      "rafamadriz/friendly-snippets",
+      { "echasnovski/mini.icons", version = false },
     },
-    { "hrsh7th/cmp-nvim-lua" },
-    { "echasnovski/mini.icons", version = false },
-  },
-  event = {
-    "InsertEnter",
-    "CmdlineEnter",
-  },
 
-  config = function()
-    local cmp = require "cmp"
-    local luasnip = require "luasnip"
-    require("luasnip/loaders/from_vscode").lazy_load()
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
 
-    local check_backspace = function()
-      local col = vim.fn.col "." - 1
-      return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-    end
-
-    -- Use mini.icons for completion item icons instead of a hand-maintained table.
-    local function kind_fmt(entry, vim_item)
-      local icon, _, default = pcall(require("mini.icons").get, "lsp", vim_item.kind)
-      vim_item.kind = icon and not default and icon or vim_item.kind
-      vim_item.menu = ({
-        nvim_lsp = "",
-        nvim_lua = "",
-        luasnip = "",
-        buffer = "",
-        path = "",
-        emoji = "",
-      })[entry.source.name]
-      return vim_item
-    end
-
-    cmp.setup {
-      snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
-      },
-      mapping = cmp.mapping.preset.insert {
-        ["<C-k>"] = cmp.mapping.select_prev_item(),
-        ["<C-j>"] = cmp.mapping.select_next_item(),
-        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-e>"] = cmp.mapping {
-          i = cmp.mapping.abort(),
-          c = cmp.mapping.close(),
+      require("blink.cmp").setup({
+        completion = {
+          ghost_text = { enabled = true },
+          documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 200,
+            window = { bordered = true },
+          },
+          list = { selection = { preselect = true, auto_insert = false } },
+          menu = {
+            draw = {
+              columns = {
+                { "kind_icon" },
+                { "label", "label_description", gap = 1 },
+                { "source_name" },
+              },
+              components = {
+                kind_icon = {
+                  text = function(ctx)
+                    local icon, _, default = pcall(require("mini.icons").get, "lsp", ctx.kind)
+                    return (icon and not default) and icon .. " " or ctx.kind .. " "
+                  end,
+                },
+              },
+            },
+          },
         },
-        ["<CR>"] = cmp.mapping.confirm { select = true },
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expandable() then
-            luasnip.expand()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif check_backspace() then
-            fallback()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      },
-      formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = kind_fmt,
-      },
-      sources = {
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
-        { name = "luasnip" },
-        { name = "buffer" },
-        { name = "path" },
-      },
-      confirm_opts = {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
-      },
-      window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-      },
-      experimental = {
-        ghost_text = true,
-      },
-    }
-  end
+
+        -- Keymap: keep the nvim-cmp muscle memory (C-j/k navigate, C-b/f scroll docs,
+        -- C-Space open, C-e close, CR accept, Tab/S-Tab select + snippet jump).
+        keymap = {
+          preset = "default",
+          ["<C-b>"] = { "scroll_documentation_up" },
+          ["<C-f>"] = { "scroll_documentation_down" },
+          ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+          ["<C-e>"] = { "hide" },
+          ["<CR>"] = { "accept", "fallback" },
+          ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+          ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+        },
+
+        -- Sources: replaces cmp-nvim-lsp / cmp-path / cmp-buffer / cmp_luasnip
+        sources = {
+          default = { "lsp", "path", "snippets", "buffer" },
+        },
+
+        -- Reuse the already-installed LuaSnip engine + friendly-snippets
+        snippets = { preset = "luasnip" },
+
+        -- Command-line completion (replaces cmp-cmdline)
+        cmdline = {
+          keymap = { preset = "default" },
+          completion = { menu = { auto_show = true } },
+        },
+
+        appearance = { nerd_font_variant = "mono" },
+
+        -- Fallback to the Lua fuzzy matcher when the Rust prebuilt binary is
+        -- unavailable (e.g. remote servers / musl / offline). Performs slightly
+        -- worse but stays functional everywhere this config runs.
+        fuzzy = { implementation = "lua" },
+      })
+    end,
+  },
 }
