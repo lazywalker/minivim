@@ -73,6 +73,8 @@ keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>", opts)
+keymap("n", "<leader>lS", ":Telescope lsp_workspace_symbols<CR>", opts)
 
 -- Git
 -- https://github.com/tanvirtin/vgit.nvim?tab=readme-ov-file#api
