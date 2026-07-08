@@ -30,7 +30,7 @@ lua/
   matugen.lua             Noctalia-generated colors (gitignored, see below)
   plugins/
     base16.lua            base16 colorscheme (gitignored, Noctalia-managed)
-    cmp.lua               completion (nvim-cmp + LuaSnip + mini.icons)
+    cmp.lua               completion (blink.cmp + LuaSnip + mini.icons)
     comment.lua           mini.comment
     git.lua               gitsigns.nvim
     highlight.lua         treesitter, rainbow-delimiters, mini.pairs, vim-illuminate
